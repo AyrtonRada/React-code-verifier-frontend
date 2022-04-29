@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 // importar nuestro servicio para realizar el pedido http
 import { login } from "../../services/authService";
 import { AxiosResponse } from "axios";
+import { useNavigate } from "react-router-dom";
 
 //Define Schema of validation with Yup
 const loginSchema = Yup.object().shape({
@@ -20,7 +21,7 @@ const LoginForm = () => {
         email: '',
         password: ''
     }
-
+    let navigate = useNavigate()
     return(
         <div>
             <h4>Login Form</h4>
@@ -32,6 +33,7 @@ const LoginForm = () => {
                         if(response.status === 200){
                             if(response.data.token){
                                 sessionStorage.setItem('sessionJWTToken', response.data.token)
+                                navigate('/')
                             }else{
                                 throw new Error('Error generating Login Token')
                             }
